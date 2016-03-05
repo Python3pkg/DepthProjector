@@ -125,16 +125,3 @@ def __save():
     GL.save_depthimage(file_name)
     GL.save_deptharray(file_name)
 
-
-if __name__ == '__main__':
-    def to_tuple(str):
-        return tuple(map(int, str.strip('(').strip(')').split(',')))
-
-
-    args = sys.argv
-    file_name = args[1]
-    theta_angle_range = to_tuple(args[2])
-    phi_angle_range = to_tuple(args[3])
-    fix_rotate = to_tuple(args[4])
-
-    depth_image(file_name, theta_angle_range, phi_angle_range, fix_rotate)

@@ -4,12 +4,12 @@ import datetime
 import itertools
 import numpy as np
 import PIL.Image as Image
-from config import PATH_DEPTH_ARRAY, PATH_DEPTH_IMG
+from __config import PATH_DEPTH_ARRAY, PATH_DEPTH_IMG
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-from src.shape import Obj
+from src.__shape import Obj
 
 
 class GL(object):

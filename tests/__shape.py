@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import unittest
-from src.shape import Shape, Obj
+from src.__shape import Shape, Obj
 
 __author__ = 'kanairen'
 

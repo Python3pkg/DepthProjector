@@ -2,7 +2,7 @@
 
 import unittest
 import pprint
-from src.io import read_obj
+from src.__io import read_obj
 
 __author__ = 'kanairen'
 

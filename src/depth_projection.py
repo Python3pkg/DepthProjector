@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import sys
-from src.pp import depth_image
+from src.__pp import depth_image
 
 __author__ = 'kanairen'
 

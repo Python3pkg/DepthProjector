@@ -3,12 +3,12 @@
 
 import sys
 import os
-import config
+import __config
 import threading
 import numpy as np
 
-from gl import GL
-from io import read_obj
+from __gl import GL
+from __io import read_obj
 
 __author__ = 'kanairen'
 
@@ -38,10 +38,10 @@ def depth_image(shape_file_path, theta_angle_range, phi_angle_range,
     global gen_angle
 
     # 保存先フォルダがない場合、作成
-    if not os.path.exists(config.PATH_DEPTH_ARRAY):
-        os.makedirs(config.PATH_DEPTH_ARRAY)
-    if not os.path.exists(config.PATH_DEPTH_IMG):
-        os.makedirs(config.PATH_DEPTH_IMG)
+    if not os.path.exists(__config.PATH_DEPTH_ARRAY):
+        os.makedirs(__config.PATH_DEPTH_ARRAY)
+    if not os.path.exists(__config.PATH_DEPTH_IMG):
+        os.makedirs(__config.PATH_DEPTH_IMG)
 
     gen_angle = __generate_angle(theta_angle_range, phi_angle_range)
 

@@ -15,10 +15,8 @@ class TestReadObj(unittest.TestCase):
     def setUp(self):
         # face:v only
         self.file_path_0 = '../res/obj/0.obj'
-        # normal exist & face:v//t
-        self.file_path_1 = '../res/obj/1.obj'
         # non normal & face:v//t
-        self.file_path_2 = '../res/obj/2.obj'
+        self.file_path_1 = '../res/obj/1.obj'
 
     def testReadObj(self):
         obj0 = read_obj(self.file_path_0)
@@ -26,9 +24,6 @@ class TestReadObj(unittest.TestCase):
 
         obj1 = read_obj(self.file_path_1)
         print obj1
-
-        obj2 = read_obj(self.file_path_2)
-        print obj2
 
 
 if __name__ == '__main__':

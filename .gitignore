@@ -1,0 +1,12 @@
+# ignore all
+/*
+
+# white list of staging
+!res
+!src
+!tests
+!.gitignore
+
+# except for..
+*.pyc
+

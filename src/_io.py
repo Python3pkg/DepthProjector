@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from src.__shape import Obj
+from src._shape import Obj
 
 __author__ = 'kanairen'
 

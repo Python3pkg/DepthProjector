@@ -3,7 +3,7 @@
 # coding=utf-8
 
 import click
-import src.__pp as pp
+import src._pp as pp
 
 __author__ = 'kanairen'
 

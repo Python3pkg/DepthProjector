@@ -4,6 +4,9 @@
 # white list of staging
 !DepthProjector
 !.gitignore
+!setup.py
+!LICENSE.txt
+!README.md
 
 # except for..
 *.pyc

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import unittest
-from src._shape import Shape, Obj
+from DepthProjector._shape import Shape, Obj
 
 __author__ = 'kanairen'
 

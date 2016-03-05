@@ -3,8 +3,7 @@
 
 # white list of staging
 !res
-!src
-!tests
+!DepthProjector
 !.gitignore
 
 # except for..

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from src._shape import Obj
+from DepthProjector._shape import Obj
 
 __author__ = 'kanairen'
 

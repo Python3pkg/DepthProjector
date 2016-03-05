@@ -9,7 +9,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
-from src._shape import Obj
+from DepthProjector._shape import Obj
 
 
 class GL(object):

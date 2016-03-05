@@ -2,7 +2,7 @@
 
 import unittest
 import pprint
-from src._io import read_obj
+from DepthProjector._io import read_obj
 
 __author__ = 'kanairen'
 

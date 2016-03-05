@@ -2,7 +2,6 @@
 /*
 
 # white list of staging
-!res
 !DepthProjector
 !.gitignore
 

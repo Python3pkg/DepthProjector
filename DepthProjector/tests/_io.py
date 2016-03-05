@@ -1,7 +1,7 @@
 # coding=utf-8
 
+import os
 import unittest
-import pprint
 from DepthProjector._io import read_obj
 
 __author__ = 'kanairen'
@@ -14,9 +14,9 @@ class TestReadObj(unittest.TestCase):
 
     def setUp(self):
         # face:v only
-        self.file_path_0 = '../res/obj/0.obj'
+        self.file_path_0 = os.path.join('.', 'res', 'obj', '0.obj')
         # non normal & face:v//t
-        self.file_path_1 = '../res/obj/1.obj'
+        self.file_path_1 = os.path.join('.', 'res', 'obj', '1.obj')
 
     def testReadObj(self):
         obj0 = read_obj(self.file_path_0)

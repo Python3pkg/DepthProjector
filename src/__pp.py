@@ -34,7 +34,7 @@ def __generate_angle(theta_angle_range, phi_angle_range):
 
 
 def depth_image(shape_file_path, theta_angle_range, phi_angle_range,
-                fix_rotate):
+                init_rotate):
     global gen_angle
 
     # 保存先フォルダがない場合、作成
@@ -47,7 +47,7 @@ def depth_image(shape_file_path, theta_angle_range, phi_angle_range,
 
     __update()
 
-    set_shape(shape_file_path, fix_rotate)
+    set_shape(shape_file_path, init_rotate)
 
     GL.display_func = __on_display
     GL.idle_func = __on_idle

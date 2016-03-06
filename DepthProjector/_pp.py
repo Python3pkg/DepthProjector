@@ -11,12 +11,12 @@ from _shape_io import read_obj
 
 __author__ = 'kanairen'
 
-"""
-perspective-projection
-"""
-
 
 class PerspectiveProjection(object):
+    """
+    perspective-projection
+    """
+
     def __init__(self, theta_angle_range, phi_angle_range, r):
         self.gl = GL(r=r)
 

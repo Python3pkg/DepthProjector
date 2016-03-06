@@ -82,7 +82,6 @@ class PerspectiveProjection(object):
             NotImplementedError(
                     'the extension of specified path is not supported.')
 
-        # shapeセット
         self.gl.shape = obj
 
     def __on_display(self):
@@ -96,14 +95,13 @@ class PerspectiveProjection(object):
             self.is_displayed_since_captured = False
             self.__update()
             # 深度マップのキャプチャ
-            run = lambda: self.__capture(self.theta_angle, self.phi_angle)
-            threading.Thread(target=run).start()
+            threading.Thread(target=self.__capture).start()
 
     # 深度マップ取得
-    def __capture(self, t_angle, p_angle):
+    def __capture(self):
         # カメラ位置を変更し、描画
-        theta = t_angle * np.pi / 180.
-        phi = p_angle * np.pi / 180.
+        theta = self.theta_angle * np.pi / 180.
+        phi = self.phi_angle * np.pi / 180.
         self.gl.camera_rotate(theta, phi)
         self.is_capture_called = True
 

@@ -8,7 +8,7 @@ import threading
 import numpy as np
 
 from _gl import GL
-from _io import read_obj
+from _shape_io import read_obj
 
 __author__ = 'kanairen'
 

@@ -35,7 +35,7 @@ class PerspectiveProjection(object):
             for p in xrange(*phi_angle_range):
                 yield (t, p)
 
-    def depth_image(self, shape_file_path, init_rotate):
+    def depth_image(self, shape_file_path, init_rotate, is_view_only=False):
 
         # 保存先フォルダがない場合、作成
         if not os.path.exists(_config.PATH_DEPTH_ARRAY):
@@ -43,12 +43,12 @@ class PerspectiveProjection(object):
         if not os.path.exists(_config.PATH_DEPTH_IMG):
             os.makedirs(_config.PATH_DEPTH_IMG)
 
-        self.__update()
-
         self.__set_shape(shape_file_path, init_rotate)
 
-        self.gl.display_func = self.__on_display
-        self.gl.idle_func = self.__on_idle
+        if not is_view_only:
+            self.__update()
+            self.gl.display_func = self.__on_display
+            self.gl.idle_func = self.__on_idle
 
         self.gl.start()
 

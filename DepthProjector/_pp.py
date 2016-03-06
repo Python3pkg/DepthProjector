@@ -79,7 +79,7 @@ class PerspectiveProjection(object):
                 obj.rotate(fix_rotate)
 
         else:
-            NotImplementedError(
+            raise NotImplementedError(
                     'the extension of specified path is not supported.')
 
         self.gl.shape = obj

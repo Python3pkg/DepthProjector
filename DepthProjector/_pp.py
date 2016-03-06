@@ -1,7 +1,6 @@
 # coding=utf-8
 
 
-import sys
 import os
 import _config
 import threading
@@ -16,112 +15,101 @@ __author__ = 'kanairen'
 perspective-projection
 """
 
-GL = GL()
 
-theta_angle = None
-phi_angle = None
+class PerspectiveProjection(object):
+    def __init__(self, theta_angle_range, phi_angle_range, r):
+        self.gl = GL(r=r)
 
-gen_angle = None
+        self.theta_angle = None
+        self.phi_angle = None
 
-is_displayed_since_captured = True
-is_capture_called = False
+        self.gen_angle = self.__generate_angle(theta_angle_range,
+                                               phi_angle_range)
 
+        self.is_displayed_since_captured = True
+        self.is_capture_called = False
 
-def __generate_angle(theta_angle_range, phi_angle_range):
-    for t in theta_angle_range:
-        for p in phi_angle_range:
-            yield (t, p)
+    @staticmethod
+    def __generate_angle(theta_angle_range, phi_angle_range):
+        for t in theta_angle_range:
+            for p in phi_angle_range:
+                yield (t, p)
 
+    def depth_image(self, shape_file_path, init_rotate):
 
-def depth_image(shape_file_path, theta_angle_range, phi_angle_range,
-                init_rotate):
-    global gen_angle
+        # 保存先フォルダがない場合、作成
+        if not os.path.exists(_config.PATH_DEPTH_ARRAY):
+            os.makedirs(_config.PATH_DEPTH_ARRAY)
+        if not os.path.exists(_config.PATH_DEPTH_IMG):
+            os.makedirs(_config.PATH_DEPTH_IMG)
 
-    # 保存先フォルダがない場合、作成
-    if not os.path.exists(_config.PATH_DEPTH_ARRAY):
-        os.makedirs(_config.PATH_DEPTH_ARRAY)
-    if not os.path.exists(_config.PATH_DEPTH_IMG):
-        os.makedirs(_config.PATH_DEPTH_IMG)
+        self.__update()
 
-    gen_angle = __generate_angle(theta_angle_range, phi_angle_range)
+        self.__set_shape(shape_file_path, init_rotate)
 
-    __update()
+        self.gl.display_func = self.__on_display
+        self.gl.idle_func = self.__on_idle
 
-    set_shape(shape_file_path, init_rotate)
+        self.gl.start()
 
-    GL.display_func = __on_display
-    GL.idle_func = __on_idle
+    def __update(self):
+        try:
+            self.theta_angle, self.phi_angle = self.gen_angle.next()
+        except StopIteration:
+            self.gl.display_func = None
+            self.gl.idle_func = None
+            self.gl.finish()
+            return
 
-    GL.start()
+    def __set_shape(self, file_path, fix_rotate=None, is_centerized=True,
+                    is_normalized=True):
+        ext = os.path.splitext(file_path)[1]
 
+        if ext == '.obj':
 
-def __on_display():
-    global is_displayed_since_captured, is_capture_called
-    if is_capture_called:
-        __save()
-        __update()
-        is_capture_called = False
-        is_displayed_since_captured = True
+            # objファイル読み込み
+            obj = read_obj(file_path)
 
+            # モデル位置修正
+            if is_centerized:
+                obj.center()
+            if is_normalized:
+                obj.normal()
+            if fix_rotate:
+                assert isinstance(fix_rotate, tuple) and len(fix_rotate) == 3
+                obj.rotate(fix_rotate)
 
-def __on_idle():
-    global is_displayed_since_captured, is_capture_called
-    if is_displayed_since_captured and GL.shape:
-        is_displayed_since_captured = False
-        # 深度マップのキャプチャ
-        run = lambda: __capture(theta_angle, phi_angle)
-        threading.Thread(target=run).start()
+        else:
+            NotImplementedError(
+                    'the extension of specified path is not supported.')
 
+        # shapeセット
+        self.gl.shape = obj
 
-def set_shape(file_path, fix_rotate=None, is_centerized=True,
-              is_normalized=True):
-    ext = os.path.splitext(file_path)[1]
+    def __on_display(self):
+        if self.is_capture_called:
+            self.__save()
+            self.__update()
+            self.is_capture_called = False
+            self.is_displayed_since_captured = True
 
-    if ext == '.obj':
+    def __on_idle(self):
+        if self.is_displayed_since_captured and self.gl.shape:
+            self.is_displayed_since_captured = False
+            # 深度マップのキャプチャ
+            run = lambda: self.__capture(self.theta_angle, self.phi_angle)
+            threading.Thread(target=run).start()
 
-        # objファイル読み込み
-        obj = read_obj(file_path)
+    # 深度マップ取得
+    def __capture(self, t_angle, p_angle):
+        # カメラ位置を変更し、描画
+        theta = t_angle * np.pi / 180.
+        phi = p_angle * np.pi / 180.
+        self.gl.camera_rotate(theta, phi)
+        self.is_capture_called = True
 
-        # モデル位置修正
-        if is_centerized:
-            obj.center()
-        if is_normalized:
-            obj.normal()
-        if fix_rotate:
-            assert isinstance(fix_rotate, tuple) and len(fix_rotate) == 3
-            obj.rotate(fix_rotate)
-    else:
-        NotImplementedError('the extension of specified path is not supported.')
-
-    # shapeセット
-    GL.shape = obj
-
-
-# 深度マップ取得
-def __capture(t_angle, p_angle):
-    global is_capture_called
-    # カメラ位置を変更し、描画
-    theta = t_angle * np.pi / 180.
-    phi = p_angle * np.pi / 180.
-    GL.camera_rotate(theta, phi)
-    is_capture_called = True
-
-
-def __update():
-    global gen_angle, theta_angle, phi_angle
-    try:
-        theta_angle, phi_angle = gen_angle.next()
-    except StopIteration:
-        GL.display_func = None
-        GL.idle_func = None
-        GL.finish()
-        return
-
-
-def __save():
-    global theta_angle, phi_angle
-    # 描画が完了したら保存
-    file_name = 't{}_p{}'.format(theta_angle, phi_angle)
-    GL.save_depthimage(file_name)
-    GL.save_deptharray(file_name)
-
+    def __save(self):
+        # 描画が完了したら保存
+        file_name = 't{}_p{}'.format(self.theta_angle, self.phi_angle)
+        self.gl.save_depthimage(file_name)
+        self.gl.save_deptharray(file_name)

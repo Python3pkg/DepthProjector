@@ -31,8 +31,8 @@ class PerspectiveProjection(object):
 
     @staticmethod
     def __generate_angle(theta_angle_range, phi_angle_range):
-        for t in theta_angle_range:
-            for p in phi_angle_range:
+        for t in xrange(*theta_angle_range):
+            for p in xrange(*phi_angle_range):
                 yield (t, p)
 
     def depth_image(self, shape_file_path, init_rotate):

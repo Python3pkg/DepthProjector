@@ -10,22 +10,21 @@ __author__ = 'kanairen'
 
 @click.command()
 @click.argument('file_path')
-@click.argument('theta_angle_range')
-@click.argument('phi_angle_range')
-@click.argument('init_rotation')
+@click.option('--theta_angle_range', '-t', nargs=3, type=(int, int, int),
+              default=(0, 360, 30),
+              help='Range of theta angle([FROM] [TO] [STEP]). Default is (0 360 30).')
+@click.option('--phi_angle_range', '-p', nargs=3, type=(int, int, int),
+              default=(-60, 61, 30),
+              help='Range of phi angle([FROM] [TO] [STEP]). Default is (-60 61 30).')
+@click.option('--init_rotation', '-i', nargs=3, type=(int, int, int),
+              default=(0, 0, 0),
+              help='Initial rotation of 3d shape([X] [Y] [Z]). Default is (0 0 0).')
 @click.option('--radius', '-r', type=float, default=1.,
               help="Radius of camera coordinate.")
 def depth_image(file_path, theta_angle_range, phi_angle_range, init_rotation,
-                r):
-    pp = PerspectiveProjection(to_tuple(theta_angle_range),
-                               to_tuple(phi_angle_range),
-                               r)
-
-    pp.depth_image(file_path, to_tuple(init_rotation))
-
-
-def to_tuple(s):
-    return tuple(map(int, s.strip('(').strip(')').split(',')))
+                radius):
+    pp = PerspectiveProjection(theta_angle_range, phi_angle_range, radius)
+    pp.depth_image(file_path, init_rotation)
 
 
 if __name__ == '__main__':

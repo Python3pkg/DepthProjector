@@ -46,7 +46,6 @@ class PerspectiveProjection(object):
         self.__set_shape(shape_file_path, init_rotate)
 
         if not is_view_only:
-            self.__update()
             self.gl.display_func = self.__on_display
             self.gl.idle_func = self.__on_idle
 
@@ -89,13 +88,13 @@ class PerspectiveProjection(object):
     def __on_display(self):
         if self.is_capture_called:
             self.__save()
-            self.__update()
             self.is_capture_called = False
             self.is_displayed_since_captured = True
 
     def __on_idle(self):
         if self.is_displayed_since_captured and self.gl.shape:
             self.is_displayed_since_captured = False
+            self.__update()
             # 深度マップのキャプチャ
             run = lambda: self.__capture(self.theta_angle, self.phi_angle)
             threading.Thread(target=run).start()

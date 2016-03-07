@@ -6,7 +6,7 @@ which maps are captured from multi-view points.
 You can specify .obj file which you'll generate depth maps and two view angles: 'Theta' 'Phi'.
 
 ## Demo
-sorry, a demo is under construction.
+![DEMO](https://github.com/kanairen/DepthProjector/blob/img-patch/demo.gif)
 
 ## Installation
 

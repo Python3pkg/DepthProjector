@@ -6,7 +6,7 @@ from distutils.core import setup
 __author__ = 'kanairen'
 
 setup(name='DepthProjector',
-      version='1.0.1',
+      version='1.0.3',
       description='DepthMap generator using Perspective Projection.',
       author='Ren Kanai',
       author_email='turutekab@gmail.com',

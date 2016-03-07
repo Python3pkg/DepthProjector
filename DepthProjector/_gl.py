@@ -281,7 +281,7 @@ class GL(object):
         """
         # ビューポートの領域を取得
         x, y, w, h = glGetIntegerv(GL_VIEWPORT)
-        return glReadPixelsf(x, y, w, h, GL_DEPTH_COMPONENT)
+        return glReadPixelsf(x, y, w, h, GL_DEPTH_COMPONENT)[-1::-1]
 
     def __idle_func(self):
         """

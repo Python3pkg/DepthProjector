@@ -3,6 +3,7 @@
 
 # white list of staging
 !DepthProjector
+!res
 !.gitignore
 !setup.py
 !LICENSE.txt

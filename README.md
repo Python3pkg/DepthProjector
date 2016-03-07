@@ -6,7 +6,9 @@ which maps are captured from multi-view points.
 You can specify .obj file which you'll generate depth maps and two view angles: 'Theta' 'Phi'.
 
 ## Demo
-![DEMO](https://github.com/kanairen/DepthProjector/blob/img-patch/demo.gif)
+
+![DEMO](https://github.com/kanairen/DepthProjector/blob/img-patch/res/demo.gif)    ![DEMO](https://github.com/kanairen/DepthProjector/blob/img-patch/res/depth-images.png)
+
 
 ## Installation
 
@@ -47,7 +49,7 @@ Options:
 ```
 
 ## Author
-@kanairen
+[kanairen](https://github.com/kanairen)
 
 
 

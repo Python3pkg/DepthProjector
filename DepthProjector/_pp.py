@@ -17,8 +17,10 @@ class PerspectiveProjection(object):
     perspective-projection
     """
 
-    def __init__(self, theta_angle_range, phi_angle_range, r):
+    def __init__(self, theta_angle_range, phi_angle_range, r, depth_image_ext):
         self.gl = GL(r=r)
+
+        self.depth_image_ext = depth_image_ext
 
         self.theta_angle = None
         self.phi_angle = None
@@ -108,5 +110,5 @@ class PerspectiveProjection(object):
     def __save(self):
         # 描画が完了したら保存
         file_name = 't{}_p{}'.format(self.theta_angle, self.phi_angle)
-        self.gl.save_depthimage(file_name)
+        self.gl.save_depthimage(file_name, ext=self.depth_image_ext)
         self.gl.save_deptharray(file_name)

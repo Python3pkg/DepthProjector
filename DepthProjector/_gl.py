@@ -261,7 +261,7 @@ class GL(object):
         np.save(os.path.join(path, name),
                 self.__depth_pixels())
 
-    def save_depthimage(self, name, ext='gif', path=PATH_DEPTH_IMG):
+    def save_depthimage(self, name, ext='png', path=PATH_DEPTH_IMG):
         """
         ウィンドウへの描画に対応する深度マップを画像として保存する
         :param name: ファイル名

@@ -3,7 +3,11 @@
 DepthProjector create depth maps from your 3d shape file,
 which maps are captured from multi-view points.
 
-You can specify .obj file which you'll generate depth maps and two view angles: 'Theta' 'Phi'.
+DepthProjector is available for '.obj' shape file only.
+
+You can specify the range of angles: 'Theta' and 'Phi'.
+
+![PP_FIGURE](https://github.com/kanairen/DepthProjector/blob/img-patch/res/pp_angles.png)
 
 ## Demo
 

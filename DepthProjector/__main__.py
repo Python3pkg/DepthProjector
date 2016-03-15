@@ -11,7 +11,7 @@ HELP_THETA = 'Range of theta angle([FROM] [TO] [STEP]). Default is (0 360 30).'
 HELP_PHI = 'Range of phi angle([FROM] [TO] [STEP]). Default is (-60 61 30).'
 HELP_INIT_ROTATION = 'Initial rotation of 3d shape([X] [Y] [Z]). Default is (0 0 0).'
 HELP_RADIUS = "Radius of camera coordinate."
-HELP_IS_VIEW_ONLY = 'Option whether is DepthProjector executed as 3D Viewer(procjection is not executed) or not.'
+HELP_IS_VIEW_ONLY = 'Option whether is DepthProjector executed as 3D Viewer(projection is not executed) or not.'
 HELP_DEPTH_IMAGE_EXT = 'File extention of depth image. Default is \'.png\' .'
 
 

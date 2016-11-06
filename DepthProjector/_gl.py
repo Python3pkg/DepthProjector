@@ -2,9 +2,9 @@
 
 import datetime
 import itertools
-import numpy as np
+
 import PIL.Image as Image
-from _config import PATH_DEPTH_ARRAY, PATH_DEPTH_IMG
+import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
@@ -16,12 +16,12 @@ class GL(object):
     MOUSE_ROTATE_RATE = 0.01
     MOUSE_ZOOM_RATE = 0.01
 
-    def __init__(self, window_title='', window_size=(300, 300),
+    def __init__(self, shape, window_title='', window_size=(300, 300),
                  window_position=(0, 0), bg_color=(0., 0.3, 0., 1), r=1.,
                  theta=0., phi=0., fov_y=45.0, z_near=1.0, z_far=10,
                  is_viewport_rate_fix=True):
 
-        self.shape = None
+        self.shape = shape
 
         self.window_title = window_title
         self.window_size = window_size
@@ -113,11 +113,11 @@ class GL(object):
 
         # カメラ位置、エイム、カメラ上方向を設定
         gluLookAt(
-                *itertools.chain(
-                        self.__rectangular_coordinates(self.r, self.theta,
-                                                       self.phi),
-                        self.camera_aim,
-                        self.camera_upper))
+            *itertools.chain(
+                self.__rectangular_coordinates(self.r, self.theta,
+                                               self.phi),
+                self.camera_aim,
+                self.camera_upper))
 
         # モデル描画
         self.__draw()
@@ -149,9 +149,8 @@ class GL(object):
             # 描画方法指定
             glBegin(GL_TRIANGLES)
             for face, c in zip(self.shape.faces, self.shape.colors):
-                glColor3d(*c)
-                for f in face:
-                    glVertex3d(*self.shape.vertices[f[0] - 1])
+                for v in self.shape.vertices[face]:
+                    glVertex3d(*v)
             glEnd()
         glFlush()
 
@@ -249,30 +248,28 @@ class GL(object):
         if self.keyboard_func:
             self.keyboard_func(key, x, y)
 
-    def save_deptharray(self, name, path=PATH_DEPTH_ARRAY):
+    def save_deptharray(self, save_path):
         """
-        ウィンドウへの描画に対応する深度マップをnumpy配列として保存する
-        :param name: ファイル名
-        :param path:
-        :return:画像を保存するフォルダパス
-        """
-        if not os.path.exists(path):
-            os.makedirs(path)
-        np.save(os.path.join(path, name),
-                self.__depth_pixels())
 
-    def save_depthimage(self, name, ext='png', path=PATH_DEPTH_IMG):
+        ウィンドウへの描画に対応する深度マップをnumpy配列として保存する
+
+        :type save_path: str
+        :param save_path: 画像を保存するフォルダパス
+
         """
+        np.save(save_path, self.__depth_pixels())
+
+    def save_depthimage(self, save_path):
+        """
+
         ウィンドウへの描画に対応する深度マップを画像として保存する
-        :param name: ファイル名
-        :param ext: 画像拡張子
-        :param path: 画像を保存するフォルダパス
+
+        :type save_path: str
+        :param save_path: 画像保存パス
+
         """
-        if not os.path.exists(path):
-            os.makedirs(path)
-        path = os.path.join(path, name)
         depth_map = ((1. - self.__depth_pixels()) * 255).astype(np.uint8)
-        Image.fromarray(depth_map).save("{}.{}".format(path, ext))
+        Image.fromarray(depth_map).save(save_path)
 
     def __depth_pixels(self):
         """

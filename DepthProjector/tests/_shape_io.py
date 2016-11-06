@@ -2,7 +2,8 @@
 
 import os
 import unittest
-from DepthProjector._shape_io import read_obj
+
+from DepthProjector._shape_io import read_obj, read_off
 
 __author__ = 'kanairen'
 
@@ -24,6 +25,19 @@ class TestReadObj(unittest.TestCase):
 
         obj1 = read_obj(self.file_path_1)
         print obj1
+
+
+class TestReadOff(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        pass
+
+    def setUp(self):
+        self.file_path_0 = os.path.join('.', 'res', 'off', '0.off')
+
+    def testReadObj(self):
+        obj0 = read_off(self.file_path_0)
+        print obj0
 
 
 if __name__ == '__main__':

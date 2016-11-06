@@ -15,9 +15,9 @@ class TestReadObj(unittest.TestCase):
 
     def setUp(self):
         # face:v only
-        self.file_path_0 = os.path.join('.', 'res', 'obj', '0.obj')
+        self.file_path_0 = os.path.join('..', 'res', 'obj', '0.obj')
         # non normal & face:v//t
-        self.file_path_1 = os.path.join('.', 'res', 'obj', '1.obj')
+        self.file_path_1 = os.path.join('..', 'res', 'obj', '1.obj')
 
     def testReadObj(self):
         obj0 = read_obj(self.file_path_0)
@@ -33,7 +33,7 @@ class TestReadOff(unittest.TestCase):
         pass
 
     def setUp(self):
-        self.file_path_0 = os.path.join('.', 'res', 'off', '0.off')
+        self.file_path_0 = os.path.join('..', 'res', 'off', '0.off')
 
     def testReadObj(self):
         obj0 = read_off(self.file_path_0)

@@ -63,7 +63,7 @@ def depth_image(model_file_path,
                                theta,
                                phi, fov_y, z_near, z_far, is_viewport_rate_fix)
     pp.start()
-    
+
 
 if __name__ == '__main__':
     depth_image()

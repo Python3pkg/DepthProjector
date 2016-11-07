@@ -1,6 +1,7 @@
 # coding=utf-8
 
 
+import sys
 import os
 import threading
 
@@ -26,7 +27,7 @@ class PerspectiveProjection(object):
                  window_title='', window_size=(300, 300),
                  window_position=(0, 0), bg_color=(0., 0.3, 0., 1), r=1.,
                  theta=0., phi=0., fov_y=45.0, z_near=1.0, z_far=10,
-                 is_viewport_rate_fix=True):
+                 is_viewport_rate_fix=True, is_exit_enabled=True):
 
         gl_shape = self.__load_shape(model_file_path,
                                      init_rotation=init_rotation,
@@ -60,6 +61,8 @@ class PerspectiveProjection(object):
         self.save_img_dir = save_img_dir
         self.save_img_ext = save_img_ext
 
+        self.is_exit_enabled = is_exit_enabled
+
     @staticmethod
     def __generate_angle(theta_angle_range, phi_angle_range):
         for t in xrange(*theta_angle_range):
@@ -76,6 +79,8 @@ class PerspectiveProjection(object):
             self.gl.display_func = None
             self.gl.idle_func = None
             self.gl.finish()
+            if self.is_exit_enabled:
+                sys.exit('GL finished.')
             return
 
     def __load_shape(self, file_path, init_rotation=None, is_centered=True,
@@ -110,7 +115,7 @@ class PerspectiveProjection(object):
             self.is_displayed_since_captured = True
 
     def __on_idle(self):
-        if self.is_displayed_since_captured and self.gl.shape:
+        if self.is_displayed_since_captured and self.gl.shape is not None:
             self.is_displayed_since_captured = False
             self.__update()
             # 深度マップのキャプチャ

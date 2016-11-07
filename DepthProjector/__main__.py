@@ -45,7 +45,7 @@ HELP_SAVE_IMAGE_EXT = 'File extention of depth image. Default is \'.png\' .'
 @click.option('--fov_y', '-fy', type=float, default=45.)
 @click.option('--z_near', '-zn', type=float, default=1.)
 @click.option('--z_far', '-zf', type=float, default=10.)
-@click.option('--is_viewport_rate_fix', '-zf', type=bool, default=True)
+@click.option('--is_viewport_rate_fix', '-v', type=bool, default=True)
 def depth_image(model_file_path,
                 theta_from, theta_to, theta_step, phi_from, phi_to, phi_step,
                 save_array_dir, save_img_dir, save_img_ext,

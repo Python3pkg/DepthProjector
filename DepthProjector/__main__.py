@@ -63,16 +63,7 @@ def depth_image(model_file_path,
                                theta,
                                phi, fov_y, z_near, z_far, is_viewport_rate_fix)
     pp.start()
-    # pp = PerspectiveProjection(theta_angle_range, phi_angle_range, radius,
-    #                            depth_image_ext, window_title='',
-    #                            window_size=(300, 300),
-    #                            window_position=(0, 0),
-    #                            bg_color=(0., 0.3, 0., 1), r=1.,
-    #                            theta=0., phi=0., fov_y=45.0, z_near=1.0,
-    #                            z_far=10,
-    #                            is_viewport_rate_fix=True)
-    # pp.depth_image(file_path, init_rotation, is_view_only=is_view_only)
-
+    
 
 if __name__ == '__main__':
     depth_image()

@@ -1,8 +1,8 @@
 # coding=utf-8
 
 
-import sys
 import os
+import sys
 import threading
 
 import numpy as np
@@ -27,7 +27,8 @@ class PerspectiveProjection(object):
                  window_title='', window_size=(300, 300),
                  window_position=(0, 0), bg_color=(0., 0.3, 0., 1), r=1.,
                  theta=0., phi=0., fov_y=45.0, z_near=1.0, z_far=10,
-                 is_viewport_rate_fix=True, is_exit_enabled=True):
+                 is_viewport_rate_fix=True, is_exit_enabled=True,
+                 undefined_dist_value=-1.0):
 
         gl_shape = self.__load_shape(model_file_path,
                                      init_rotation=init_rotation,
@@ -36,7 +37,7 @@ class PerspectiveProjection(object):
 
         self.gl = GL(gl_shape, window_title, window_size, window_position,
                      bg_color, r, theta, phi, fov_y, z_near, z_far,
-                     is_viewport_rate_fix)
+                     is_viewport_rate_fix, undefined_dist_value)
 
         if not is_view_only:
             self.gl.display_func = self.__on_display

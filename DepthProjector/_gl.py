@@ -15,11 +15,12 @@ from DepthProjector._shape import Obj
 class GL(object):
     MOUSE_ROTATE_RATE = 0.01
     MOUSE_ZOOM_RATE = 0.01
+    GL_UNDEFINED_DISTANCE_VALUE = -1.
 
     def __init__(self, shape, window_title='', window_size=(300, 300),
                  window_position=(0, 0), bg_color=(0., 0.3, 0., 1), r=1.,
                  theta=0., phi=0., fov_y=45.0, z_near=1.0, z_far=10,
-                 is_viewport_rate_fix=True):
+                 is_viewport_rate_fix=True, undefined_dist_value=-1.):
 
         self.shape = shape
 
@@ -54,6 +55,8 @@ class GL(object):
         self.motion_func = None
         self.keyboard_func = None
         self.idle_func = None
+
+        self.undefined_dist_value = undefined_dist_value
 
     def start(self):
         """
@@ -278,7 +281,11 @@ class GL(object):
         """
         # ビューポートの領域を取得
         x, y, w, h = glGetIntegerv(GL_VIEWPORT)
-        return glReadPixelsf(x, y, w, h, GL_DEPTH_COMPONENT)[-1::-1]
+        dp = glReadPixelsf(x, y, w, h, GL_DEPTH_COMPONENT)[-1::-1]
+        # 任意の未定義距離値を適用
+        if GL.GL_UNDEFINED_DISTANCE_VALUE != self.undefined_dist_value:
+            dp[dp == GL.GL_UNDEFINED_DISTANCE_VALUE] = self.undefined_dist_value
+        return dp
 
     def __idle_func(self):
         """

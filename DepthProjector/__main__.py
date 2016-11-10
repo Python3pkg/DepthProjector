@@ -48,6 +48,7 @@ HELP_SAVE_IMAGE_EXT = 'File extention of depth image. Default is \'.png\' .'
 @click.option('--is_viewport_rate_fix', '-v', type=bool, default=True)
 @click.option('--is_exit_enabled', '-e', type=bool, default=True)
 @click.option('--undefined_dist_value', '-d', type=float, default=-1.)
+@click.option('--is_perspective', '-p', type=bool, default=False)
 def depth_image(model_file_path,
                 theta_from, theta_to, theta_step, phi_from, phi_to, phi_step,
                 save_array_dir, save_img_dir, save_img_ext,
@@ -55,7 +56,7 @@ def depth_image(model_file_path,
                 is_view_only, window_title,
                 window_size, window_position, bg_color, radius, theta,
                 phi, fov_y, z_near, z_far, is_viewport_rate_fix,
-                is_exit_enabled, undefined_dist_value):
+                is_exit_enabled, undefined_dist_value, is_perspective):
     pp = PerspectiveProjection(model_file_path,
                                (theta_from, theta_to, theta_step),
                                (phi_from, phi_to, phi_step),
@@ -65,7 +66,8 @@ def depth_image(model_file_path,
                                window_size, window_position, bg_color, radius,
                                theta,
                                phi, fov_y, z_near, z_far, is_viewport_rate_fix,
-                               is_exit_enabled, undefined_dist_value)
+                               is_exit_enabled, undefined_dist_value,
+                               is_perspective)
     pp.start()
 
 

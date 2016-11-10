@@ -20,7 +20,8 @@ class GL(object):
     def __init__(self, shape, window_title='', window_size=(300, 300),
                  window_position=(0, 0), bg_color=(0., 0.3, 0., 1), r=1.,
                  theta=0., phi=0., fov_y=45.0, z_near=1.0, z_far=10,
-                 is_viewport_rate_fix=True, undefined_dist_value=-1.):
+                 is_viewport_rate_fix=True, undefined_dist_value=-1.,
+                 is_perspective=True):
 
         self.shape = shape
 
@@ -57,6 +58,8 @@ class GL(object):
         self.idle_func = None
 
         self.undefined_dist_value = undefined_dist_value
+
+        self.is_perspective = is_perspective
 
     def start(self):
         """
@@ -109,10 +112,16 @@ class GL(object):
         # 初期行列に単位行列を掛け、初期化
         glLoadIdentity()
 
-        # 透視投影
-        gluPerspective(self.fov_y,
-                       glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT),
-                       self.z_near, self.z_far)
+        # 投影法の設定
+        if self.is_perspective:
+            # 透視投影
+            gluPerspective(self.fov_y,
+                           glutGet(GLUT_WINDOW_WIDTH) / glutGet(
+                               GLUT_WINDOW_HEIGHT),
+                           self.z_near, self.z_far)
+        else:
+            # 平行投影
+            glOrtho(-1.0, 1.0, -1.0, 1.0, self.z_near, self.z_far)
 
         # カメラ位置、エイム、カメラ上方向を設定
         gluLookAt(

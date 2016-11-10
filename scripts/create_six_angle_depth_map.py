@@ -15,7 +15,7 @@ import numpy as np
 if __name__ == '__main__':
 
     python_path, off_dir, save_array_path, save_img_path, \
-    fy, width, height = sys.argv[1:7]
+    fy, width, height = sys.argv[1:8]
 
     fy = float(fy)
 

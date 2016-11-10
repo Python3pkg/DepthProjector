@@ -24,11 +24,11 @@ if __name__ == '__main__':
     zn = r - 1
     zf = r + 1
 
-    command = "{python_path} DepthProjector ".format(python_path=python_path) + \
-              "{off_path} {t_from} {t_to} {t_step} {p_from} {p_to} {p_step} " \
+    command = "{python_path} ../DepthProjector ".format(python_path=python_path) + \
+              "{off_path} {t_from} {t_to} {t_step} {p_from} {p_to} {p_step} " + \
               "{save_array_path}".format(save_array_path=save_array_path) + \
-              "/array/{name}/{angle} " \
-              "{save_array_path}".format(save_img_path=save_img_path) + \
+              "/array/{name}/{angle} " + \
+              "{save_img_path}".format(save_img_path=save_img_path) + \
               "/img/{name}/{angle} " + \
               "-r {r} -fy {fy} -zn {zn} -zf {zf} -ws {width} {height}" \
                   .format(r=r, fy=fy, zn=zn, zf=zf, width=int(width),

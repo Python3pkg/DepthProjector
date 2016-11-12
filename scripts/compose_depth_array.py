@@ -21,9 +21,11 @@ if __name__ == '__main__':
     # 整数抜き出し用正規表現
     c = re.compile("\d+")
 
+
     def sort_str(s_iter):
         perm = np.argsort([int(c.findall(s)[0]) for s in s_iter])
         return np.asarray(s_iter)[perm].astype(np.string_)
+
 
     # T*フォルダをモデルIDの昇順にソート
     s_folders = sort_str(os.listdir(dir_path))
@@ -54,7 +56,8 @@ if __name__ == '__main__':
                 if empty is None:
                     width, height = arr.shape
                     empty = np.empty(
-                        (len(s_folders) * len(s_angles), width, height))
+                        (len(s_folders) * len(s_angles), len(file_names), width,
+                         height))
 
                 empty[i * len(s_angles) + j, k, :, :] = arr
 

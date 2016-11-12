@@ -16,7 +16,13 @@ if __name__ == '__main__':
 
     python_path, off_dir, save_array_path, save_img_path, \
     fy, width, height = sys.argv[1:8]
-
+    is_perspective = sys.argv[8]
+    if is_perspective == "True":
+        is_perspective = True
+    elif is_perspective == "False":
+        is_perspective = False
+    else:
+        raise TypeError
     fy = float(fy)
 
     rate = 1. / np.sin(fy / 2. / 180. * np.pi)

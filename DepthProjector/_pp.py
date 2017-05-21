@@ -7,8 +7,8 @@ import threading
 
 import numpy as np
 
-from _gl import GL
-from _shape_io import read_obj, read_off
+from ._gl import GL
+from ._shape_io import read_obj, read_off
 
 __author__ = 'kanairen'
 
@@ -66,8 +66,8 @@ class PerspectiveProjection(object):
 
     @staticmethod
     def __generate_angle(theta_angle_range, phi_angle_range):
-        for t in xrange(*theta_angle_range):
-            for p in xrange(*phi_angle_range):
+        for t in range(*theta_angle_range):
+            for p in range(*phi_angle_range):
                 yield (t, p)
 
     def start(self):
@@ -75,7 +75,7 @@ class PerspectiveProjection(object):
 
     def __update(self):
         try:
-            self.theta_angle, self.phi_angle = self.gen_angle.next()
+            self.theta_angle, self.phi_angle = next(self.gen_angle)
         except StopIteration:
             self.gl.display_func = None
             self.gl.idle_func = None

@@ -21,10 +21,10 @@ class TestReadObj(unittest.TestCase):
 
     def testReadObj(self):
         obj0 = read_obj(self.file_path_0)
-        print obj0
+        print(obj0)
 
         obj1 = read_obj(self.file_path_1)
-        print obj1
+        print(obj1)
 
 
 class TestReadOff(unittest.TestCase):
@@ -37,7 +37,7 @@ class TestReadOff(unittest.TestCase):
 
     def testReadObj(self):
         obj0 = read_off(self.file_path_0)
-        print obj0
+        print(obj0)
 
 
 if __name__ == '__main__':

@@ -43,7 +43,7 @@ if __name__ == '__main__':
                           height=int(height))
 
     for f in os.listdir(off_dir):
-        for alpha in xrange(0, 45 + 1, 5):
+        for alpha in range(0, 45 + 1, 5):
             off_path = os.path.join(off_dir, f)
             name, _ = os.path.splitext(f)
 

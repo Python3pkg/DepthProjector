@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     for i, folder in enumerate(s_folders):
 
-        print folder
+        print(folder)
 
         # DataAugmentation角度別フォルダを角度の昇順にソート
         s_angles = sort_str(os.listdir(os.path.join(dir_path, folder)))
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
             # theta-phiの回転角をソート
             file_names = os.listdir(os.path.join(dir_path, folder, angle))
-            tp_angles = [map(int, c.findall(name)) for name in file_names]
+            tp_angles = [list(map(int, c.findall(name))) for name in file_names]
             tp_angles.sort(key=lambda x: (x[0], x[1]))
             file_names = ["t{}_p{}.npy".format(t, p) for t, p in tp_angles]
 
@@ -61,6 +61,6 @@ if __name__ == '__main__':
 
                 empty[i * len(s_angles) + j, k, :, :] = arr
 
-        print "{}s".format(time.clock() - start)
+        print("{}s".format(time.clock() - start))
 
     np.save(save_array_path, empty)

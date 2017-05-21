@@ -21,8 +21,7 @@ def read_obj(obj_file_path):
     """
 
     with open(obj_file_path) as f:
-        lines = filter(lambda x: x != "\n" and x[0] != "#",
-                       [line.strip().split() for line in f.readlines()])
+        lines = [x for x in [line.strip().split() for line in f.readlines()] if x != "\n" and x[0] != "#"]
 
         vertices = np.array(
             [list(map(float, line[1:])) for line in lines if
@@ -31,8 +30,7 @@ def read_obj(obj_file_path):
             [list(map(float, line[1:])) for line in lines if
              line[0] == 'vn'])
         faces = np.array(
-            [list(map(lambda x: x - 1,
-                      map(int, map(lambda x: x.split('/')[0], line[1:])))) for
+            [list([x - 1 for x in list(map(int, [x.split('/')[0] for x in line[1:]]))]) for
              line in lines if line[0] == 'f'])
 
     return Obj(vertices, normals, faces)
@@ -54,23 +52,22 @@ def read_off(off_file_path):
 
     with open(off_file_path) as f:
         # コメント・空行を除去
-        lines = filter(lambda x: x != '\n' and x[0] != "#",
-                       f.readlines())
+        lines = [x for x in f.readlines() if x != '\n' and x[0] != "#"]
 
         # 一行目はファイルフォーマット名
         if "OFF" not in lines.pop(0):
             raise IOError("file must be \"off\" format file.")
 
         # 頂点数、面数、辺数
-        n_vertices, n_faces, n_edges = map(int, lines.pop(0).split(' '))
+        n_vertices, n_faces, n_edges = list(map(int, lines.pop(0).split(' ')))
 
         # 頂点座標を取得
-        vertices = np.array([map(float, lines[i].strip().split(' '))
-                             for i in xrange(n_vertices)])
+        vertices = np.array([list(map(float, lines[i].strip().split(' ')))
+                             for i in range(n_vertices)])
 
         # 面を構成する頂点のインデックス
         faces = np.array(
             [map(int, lines[n_vertices + i].strip().split(' '))[1:]
-             for i in xrange(n_faces)])
+             for i in range(n_faces)])
 
     return Obj(vertices, np.empty(shape=[0, ]), faces)
